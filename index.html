@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Открыть письмо</title></head>
+<body style="font:17px -apple-system,sans-serif;padding:24px;line-height:1.5">
+<p>Открываю письмо в приложении Gmail…</p>
+<p><a id="w" href="https://mail.google.com/">Не открылось? Открыть на сайте</a></p>
+<script>
+// Переходник для бота: #<ящик>/<id цепочки>/<id письма>. Часть после # не уходит на сервер.
+// Данных и писем здесь нет — только переход в приложение Gmail, иначе на сайт.
+var p = decodeURIComponent(location.hash.slice(1)).split("/");
+var acc = /^[^\s@\/]+@[^\s@\/]+$/.test(p[0] || "") ? p[0] : "";
+var thr = /^[0-9a-f]{6,24}$/.test(p[1] || "") ? p[1] : "";
+var mid = /^[0-9a-f]{6,24}$/.test(p[2] || "") ? p[2] : thr;
+var web = "https://mail.google.com/mail/?authuser=" + encodeURIComponent(acc) + (mid ? "#all/" + mid : "");
+document.getElementById("w").href = web;
+location.href = thr ? "googlegmail:///cv=" + thr : "googlegmail://";
+setTimeout(function () { if (!document.hidden) location.href = web; }, 2000);
+</script>
+</body></html>
